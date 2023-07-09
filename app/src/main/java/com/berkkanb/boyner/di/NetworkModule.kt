@@ -18,7 +18,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideBaseURL(): String {
-        return "https://newsapi.org/v2"
+        return "https://newsapi.org/v2/"
     }
 
     @Singleton
