@@ -22,10 +22,16 @@ fun NewsListScreen(
     } else {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(10.dp)
-        ){
+        ) {
             uiState.newsList?.let { newsList ->
-                items(newsList){
-                    NewsCard(title = it.title, imageURL = it.urlToImage, isBookmarked = false, onClickBookmark = {})
+                items(newsList) {
+                    NewsCard(
+                        title = it.title,
+                        imageURL = it.urlToImage,
+                        isBookmarked = uiState.bookmarkList.contains(it.url),
+                        onClickBookmark = {
+                            newsListScreenViewModel.onClickBookmark(it.url)
+                        })
                 }
             }
         }

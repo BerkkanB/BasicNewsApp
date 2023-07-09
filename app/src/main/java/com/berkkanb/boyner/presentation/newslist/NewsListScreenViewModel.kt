@@ -3,11 +3,14 @@ package com.berkkanb.boyner.presentation.newslist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.berkkanb.boyner.data.model.BookmarkEntity
 import com.berkkanb.boyner.data.model.NewsUI
+import com.berkkanb.boyner.domain.BookmarkRepository
 import com.berkkanb.boyner.domain.GetNewsListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsListScreenViewModel @Inject constructor(
     private val getNewsListRepository: GetNewsListRepository,
+    private val bookmarkRepository: BookmarkRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val sourceId: String = checkNotNull(savedStateHandle["sourceId"])
@@ -24,6 +28,7 @@ class NewsListScreenViewModel @Inject constructor(
 
     init {
         getNewsList()
+        getAllBookmarks()
     }
 
     private fun getNewsList() {
@@ -72,11 +77,44 @@ class NewsListScreenViewModel @Inject constructor(
         }
     }
 
+    private fun saveBookmark(newsUrl: String){
+        viewModelScope.launch {
+            bookmarkRepository.insertBookmark(BookmarkEntity(url = newsUrl))
+        }
+    }
+
+    private fun deleteBookmark(newsUrl: String){
+        viewModelScope.launch {
+            bookmarkRepository.deleteBookmark(BookmarkEntity(url = newsUrl))
+        }
+    }
+
+    fun onClickBookmark(newsUrl: String){
+        if (uiState.value.bookmarkList.contains(newsUrl)){
+            deleteBookmark(newsUrl)
+        } else {
+            saveBookmark(newsUrl)
+        }
+    }
+
+    private fun getAllBookmarks(){
+        viewModelScope.launch {
+            bookmarkRepository.getAllBookmarks().collectLatest { bookmarks ->
+                _uiState.update {
+                    it.copy(
+                        bookmarkList = bookmarks.map { it.url }
+                    )
+                }
+            }
+        }
+    }
+
 }
 
 data class NewsListScreenUIState(
     val newsList:List<NewsUI>? = null,
     val carouselNewsList:List<NewsUI>? = null,
+    val bookmarkList:List<String> = emptyList(),
     val isLoading:Boolean = false,
     val hasError:Boolean = false
 )
