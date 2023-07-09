@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.berkkanb.boyner.presentation.coreui.LoadingScreen
 import com.berkkanb.boyner.presentation.source.components.CategoryItem
 import com.berkkanb.boyner.presentation.source.components.NewsSourceCard
@@ -17,7 +18,8 @@ import com.berkkanb.boyner.presentation.source.components.NewsSourceCard
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SourceScreen(
-    sourceScreenViewModel: SourceScreenViewModel = hiltViewModel()
+    sourceScreenViewModel: SourceScreenViewModel = hiltViewModel(),
+    navigateToNewsList: (sourceId:String) -> Unit
 ) {
     val uiState by sourceScreenViewModel.uiState.collectAsState()
 
@@ -42,7 +44,7 @@ fun SourceScreen(
             }
             uiState.sourceList?.let { sourceList ->
                 items(sourceList, key = { it.sourceId }) {
-                    NewsSourceCard(title = it.sourceName, description = it.sourceDescription)
+                    NewsSourceCard(title = it.sourceName, description = it.sourceDescription, onClick = {navigateToNewsList.invoke(it.sourceId)})
                 }
             }
         }

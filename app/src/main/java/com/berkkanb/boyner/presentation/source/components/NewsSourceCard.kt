@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 @Composable
 fun NewsSourceCard(
     title:String,
-    description:String
+    description:String,
+    onClick:()->Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ }
+        onClick = { onClick.invoke() }
     ) {
         Column() {
             Text(text = title)
