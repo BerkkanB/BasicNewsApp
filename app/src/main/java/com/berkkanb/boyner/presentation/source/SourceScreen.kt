@@ -1,5 +1,6 @@
 package com.berkkanb.boyner.presentation.source
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.berkkanb.boyner.presentation.coreui.LoadingScreen
@@ -26,7 +28,9 @@ fun SourceScreen(
     if (uiState.isLoading) {
         LoadingScreen()
     } else {
-        LazyColumn() {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
             item {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth()
