@@ -10,5 +10,5 @@ interface ApiService {
     suspend fun getSourceList(
         @Query("language") language: String,
         @Query("apiKey") apiKey: String
-    ): Response<List<SourceResponseUI>>
+    ): Response<SourceResponseUI>
 }
