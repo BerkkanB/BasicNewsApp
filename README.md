@@ -30,3 +30,5 @@ Of course, this repo could not be prepared in the best way due to the limited ti
  - Categories should be pulled from server
  - Database entities should mapped to ui data form before came to ui layer
 
+## Note
+The UI-UX never cared
