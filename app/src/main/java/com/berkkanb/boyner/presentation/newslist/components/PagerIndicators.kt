@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PagerIndicators(
-    totalPage:Int,
-    currentPage:Int
+    totalPage: Int,
+    currentPage: Int
 ) {
     Row(
         Modifier

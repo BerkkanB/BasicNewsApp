@@ -15,11 +15,11 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
     @Binds
-    fun provideGetNewsSourceListRepository(repositoryImpl: GetNewsSourceListRepositoryImpl):GetNewsSourceListRepository
+    fun provideGetNewsSourceListRepository(repositoryImpl: GetNewsSourceListRepositoryImpl): GetNewsSourceListRepository
 
     @Binds
     fun provideGetNewsListRepository(repositoryImpl: GetNewsListRepositoryImpl): GetNewsListRepository
 
     @Binds
-    fun provideBookmarkRepository(repositoryImpl:BookmarkRepositoryImpl) : BookmarkRepository
+    fun provideBookmarkRepository(repositoryImpl: BookmarkRepositoryImpl): BookmarkRepository
 }

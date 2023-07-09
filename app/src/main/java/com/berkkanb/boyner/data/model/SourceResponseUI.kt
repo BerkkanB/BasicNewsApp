@@ -6,8 +6,9 @@ data class SourceResponseUI(
     @SerializedName("status")
     val status: String,
     @SerializedName("sources")
-    val sources:List<SourceUI>
+    val sources: List<SourceUI>
 )
+
 data class SourceUI(
     @SerializedName("id")
     val sourceId: String,

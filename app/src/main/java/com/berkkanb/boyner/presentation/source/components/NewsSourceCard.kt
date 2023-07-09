@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsSourceCard(
-    title:String,
-    description:String,
-    onClick:()->Unit
+    title: String,
+    description: String,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),

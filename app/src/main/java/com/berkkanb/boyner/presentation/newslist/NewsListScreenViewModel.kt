@@ -35,13 +35,12 @@ class NewsListScreenViewModel @Inject constructor(
         viewModelScope.launch {
             setLoadingStatus()
             val response = getNewsListRepository.getNewsList(sourceId)
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val newsList = response.body()?.articles
                 if (newsList != null) {
                     setNewsList(newsList)
                 }
-            }
-            else {
+            } else {
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -53,11 +52,11 @@ class NewsListScreenViewModel @Inject constructor(
     }
 
     private fun setNewsList(newsList: List<NewsUI>) {
-        if (newsList.size > 3){
+        if (newsList.size > 3) {
             _uiState.update {
                 it.copy(
-                    carouselNewsList = newsList.subList(0,3),
-                    newsList = newsList.subList(3,newsList.size.minus(1)),
+                    carouselNewsList = newsList.subList(0, 3),
+                    newsList = newsList.subList(3, newsList.size.minus(1)),
                     isLoading = false
                 )
             }
@@ -71,33 +70,33 @@ class NewsListScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setLoadingStatus(){
+    private fun setLoadingStatus() {
         _uiState.update {
             it.copy(isLoading = true)
         }
     }
 
-    private fun saveBookmark(newsUrl: String){
+    private fun saveBookmark(newsUrl: String) {
         viewModelScope.launch {
             bookmarkRepository.insertBookmark(BookmarkEntity(url = newsUrl))
         }
     }
 
-    private fun deleteBookmark(newsUrl: String){
+    private fun deleteBookmark(newsUrl: String) {
         viewModelScope.launch {
             bookmarkRepository.deleteBookmark(BookmarkEntity(url = newsUrl))
         }
     }
 
-    fun onClickBookmark(newsUrl: String){
-        if (uiState.value.bookmarkList.contains(newsUrl)){
+    fun onClickBookmark(newsUrl: String) {
+        if (uiState.value.bookmarkList.contains(newsUrl)) {
             deleteBookmark(newsUrl)
         } else {
             saveBookmark(newsUrl)
         }
     }
 
-    private fun getAllBookmarks(){
+    private fun getAllBookmarks() {
         viewModelScope.launch {
             bookmarkRepository.getAllBookmarks().collectLatest { bookmarks ->
                 _uiState.update {
@@ -112,9 +111,9 @@ class NewsListScreenViewModel @Inject constructor(
 }
 
 data class NewsListScreenUIState(
-    val newsList:List<NewsUI>? = null,
-    val carouselNewsList:List<NewsUI>? = null,
-    val bookmarkList:List<String> = emptyList(),
-    val isLoading:Boolean = false,
-    val hasError:Boolean = false
+    val newsList: List<NewsUI>? = null,
+    val carouselNewsList: List<NewsUI>? = null,
+    val bookmarkList: List<String> = emptyList(),
+    val isLoading: Boolean = false,
+    val hasError: Boolean = false
 )

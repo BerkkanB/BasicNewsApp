@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class GetNewsListRepositoryImpl @Inject constructor(
     private val apiService: ApiService
-): GetNewsListRepository {
-    override suspend fun getNewsList(sourceId:String): Response<NewsResponseUI> {
-        return apiService.getNewsList("905e0f9c7cbe45309320bd2678d00d03",sourceId) // TODO
+) : GetNewsListRepository {
+    override suspend fun getNewsList(sourceId: String): Response<NewsResponseUI> {
+        return apiService.getNewsList("905e0f9c7cbe45309320bd2678d00d03", sourceId) // TODO
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.berkkanb.boyner.presentation.coreui.LoadingScreen
 import com.berkkanb.boyner.presentation.source.components.CategoryItem
 import com.berkkanb.boyner.presentation.source.components.NewsSourceCard
@@ -21,7 +20,7 @@ import com.berkkanb.boyner.presentation.source.components.NewsSourceCard
 @Composable
 fun SourceScreen(
     sourceScreenViewModel: SourceScreenViewModel = hiltViewModel(),
-    navigateToNewsList: (sourceId:String) -> Unit
+    navigateToNewsList: (sourceId: String) -> Unit
 ) {
     val uiState by sourceScreenViewModel.uiState.collectAsState()
 
@@ -40,7 +39,7 @@ fun SourceScreen(
                             CategoryItem(
                                 title = category.category,
                                 isSelected = uiState.selectedCategories.any { it == category },
-                                onClick = {sourceScreenViewModel.onSelectCategory(category)}
+                                onClick = { sourceScreenViewModel.onSelectCategory(category) }
                             )
                         }
                     }
@@ -48,7 +47,10 @@ fun SourceScreen(
             }
             uiState.sourceList?.let { sourceList ->
                 items(sourceList, key = { it.sourceId }) {
-                    NewsSourceCard(title = it.sourceName, description = it.sourceDescription, onClick = {navigateToNewsList.invoke(it.sourceId)})
+                    NewsSourceCard(
+                        title = it.sourceName,
+                        description = it.sourceDescription,
+                        onClick = { navigateToNewsList.invoke(it.sourceId) })
                 }
             }
         }

@@ -27,11 +27,11 @@ class SourceScreenViewModel @Inject constructor(
         setCategoryList()
     }
 
-    private fun getNewsSourceList(){
+    private fun getNewsSourceList() {
         viewModelScope.launch {
             setLoadingStatus()
             val response = getNewsSourceListRepository.getNewsSourceList()
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val sourceList = response.body()?.sources
                 _uiState.update {
                     it.copy(
@@ -53,8 +53,16 @@ class SourceScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setCategoryList(){
-        val categoryList = listOf("business","entertainment","general","health","science","sports","technology")
+    private fun setCategoryList() {
+        val categoryList = listOf(
+            "business",
+            "entertainment",
+            "general",
+            "health",
+            "science",
+            "sports",
+            "technology"
+        )
         _uiState.update {
             it.copy(
                 categoryList = categoryList.map { category -> NewsCategory(category) },
@@ -63,14 +71,14 @@ class SourceScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setLoadingStatus(){
+    private fun setLoadingStatus() {
         _uiState.update {
             it.copy(isLoading = true)
         }
     }
 
-    fun onSelectCategory(category:NewsCategory){
-        if (uiState.value.selectedCategories.contains(category)){
+    fun onSelectCategory(category: NewsCategory) {
+        if (uiState.value.selectedCategories.contains(category)) {
             val updatedList = uiState.value.selectedCategories.filterNot { it == category }
             _uiState.update {
                 it.copy(selectedCategories = updatedList)
@@ -82,7 +90,11 @@ class SourceScreenViewModel @Inject constructor(
             }
         }
 
-        val updatedList = initialSourceList.value.filter { uiState.value.selectedCategories.contains(NewsCategory(it.sourceCategory)) }
+        val updatedList = initialSourceList.value.filter {
+            uiState.value.selectedCategories.contains(
+                NewsCategory(it.sourceCategory)
+            )
+        }
         _uiState.update {
             it.copy(sourceList = updatedList)
         }
@@ -94,11 +106,12 @@ class SourceScreenViewModel @Inject constructor(
 
 data class SourceScreenUIState(
     val sourceList: List<SourceUI>? = null,
-    val isLoading:Boolean = false,
-    val hasError:Boolean = false,
-    val categoryList:List<NewsCategory> = mutableListOf(),
-    val selectedCategories:List<NewsCategory> = mutableListOf()
+    val isLoading: Boolean = false,
+    val hasError: Boolean = false,
+    val categoryList: List<NewsCategory> = mutableListOf(),
+    val selectedCategories: List<NewsCategory> = mutableListOf()
 )
+
 data class NewsCategory(
-    val category:String
+    val category: String
 )

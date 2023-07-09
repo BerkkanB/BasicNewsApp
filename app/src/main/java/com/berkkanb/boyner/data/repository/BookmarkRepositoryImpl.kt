@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class BookmarkRepositoryImpl @Inject constructor(
     private val bookmarkDao: BookmarkDao
-): BookmarkRepository {
+) : BookmarkRepository {
 
     override fun getAllBookmarks(): Flow<List<BookmarkEntity>> {
         return bookmarkDao.getAllBookmarks()
