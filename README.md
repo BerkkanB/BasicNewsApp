@@ -29,6 +29,8 @@ Of course, this repo could not be prepared in the best way due to the limited ti
  - With multimodule structure, Compose Navigation will be implemented better, in accordance with the SOLID principles
  - Categories should be pulled from server
  - Database entities should mapped to ui data form before came to ui layer
+ - Unit tests and Portrait mode could be added
+ - Slider timer for auto-sliding could be implemented
 
 ## Note
 The UI-UX never cared
