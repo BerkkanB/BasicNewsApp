@@ -10,6 +10,6 @@ class GetNewsSourceListRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : GetNewsSourceListRepository {
     override suspend fun getNewsSourceList(): Response<SourceResponseUI> {
-        return apiService.getSourceList("en","905e0f9c7cbe45309320bd2678d00d03") // TODO
+        return apiService.getSourceList("905e0f9c7cbe45309320bd2678d00d03","en") // TODO
     }
 }
